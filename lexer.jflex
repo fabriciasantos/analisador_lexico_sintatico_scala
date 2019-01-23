@@ -15,6 +15,8 @@ import java.io.InputStreamReader;
 %column
 %cup
 %char
+
+
 %{
 	
 
@@ -28,7 +30,7 @@ import java.io.InputStreamReader;
     }
     
     private StringBuffer sb;
-    private ComplexSymbolFactory symbolFactory;
+    private ComplexSymbolFactory symbolFactory = new ComplexSymbolFactory();
     private int csline,cscolumn;
 
     public Symbol symbol(String name, int code){
@@ -56,13 +58,18 @@ import java.io.InputStreamReader;
 
 Newline    = \r | \n | \r\n
 Whitespace = [ \t\f] | {Newline}
-Number     = [0-9]+
+InputCharacter = [^\r\n]
+
+Sign           = "+" | "-"
+IntLiteral     = {Sign}? (0 | [1-9][0-9]*)
+Identifier     = [a-zA-Z][a-zA-Z0-9_']* 
 
 /* comments */
 Comment = {TraditionalComment} | {EndOfLineComment}
-TraditionalComment = "/*" {CommentContent} \*+ "/"
-EndOfLineComment = "//" [^\r\n]* {Newline}
-CommentContent = ( [^*] | \*+[^*/] )*
+
+TraditionalComment = "/*" [^*:] ~"*/" | "/*" "*"+ "/"
+EndOfLineComment = "//" {InputCharacter}* {Newline}
+
 
 ident = ([:jletter:] | "_" ) ([:jletterdigit:] | [:jletter:] | "_" )*
 
@@ -77,17 +84,81 @@ ident = ([:jletter:] | "_" ) ([:jletterdigit:] | [:jletter:] | "_" )*
 
 <YYINITIAL> {
 
-  {Whitespace} {                              }
-  ";"          { return symbolFactory.newSymbol("SEMI", SEMI); }
-  "+"          { return symbolFactory.newSymbol("PLUS", PLUS); }
-  "-"          { return symbolFactory.newSymbol("MINUS", MINUS); }
-  "*"          { return symbolFactory.newSymbol("TIMES", TIMES); }
-  "n"          { return symbolFactory.newSymbol("UMINUS", UMINUS); }
-  "("          { return symbolFactory.newSymbol("LPAREN", LPAREN); }
-  ")"          { return symbolFactory.newSymbol("RPAREN", RPAREN); }
-  {Number}     { return symbolFactory.newSymbol("NUMBER", NUMBER, Integer.parseInt(yytext())); }
+  {Whitespace} 	{                              }
+  {Comment}	   	{  }
+  ";"          	{ return symbolFactory.newSymbol("SEMI", SEMI); }
+  "+"          	{ return symbolFactory.newSymbol("PLUS", PLUS); }
+  "-"          	{ return symbolFactory.newSymbol("MINUS", MINUS); }
+  "*"          	{ return symbolFactory.newSymbol("TIMES", TIMES); }
+  "n"          	{ return symbolFactory.newSymbol("UMINUS", UMINUS); }
+  "("          	{ return symbolFactory.newSymbol("LPAREN", LPAREN); }
+  ")"          	{ return symbolFactory.newSymbol("RPAREN", RPAREN); }
+  "&&"         	{ return symbolFactory.newSymbol("AND", AND); } 
+  "||"         	{ return symbolFactory.newSymbol("OR",OR); } 
+  "!"          	{ return symbolFactory.newSymbol("NOT", NOT); }
+  "--"         	{ return symbolFactory.newSymbol("MINUSMINUS", MINUSMINUS); }
+  "_"          	{ return symbolFactory.newSymbol("UNDERLINE", UNDERLINE); }
+  "/"          	{ return symbolFactory.newSymbol("DIV", DIV); }
+  "/*:"			{ return symbolFactory.newSymbol("LANNOT", LANNOT); }	
+  "*/"			{ return symbolFactory.newSymbol("RANNOT", RANNOT); }
+  "%"           { return symbolFactory.newSymbol("MOD", MOD); }
+  "$"           { return symbolFactory.newSymbol("DOLLAR", DOLLAR); }
+  "@"           { return symbolFactory.newSymbol("ATSIGN", ATSIGN); }  
+  "<="          { return symbolFactory.newSymbol("LEQ", LEQ); }
+  "=>"          { return symbolFactory.newSymbol("DOUBLEARROW", DOUBLEARROW); }  
+  "<"           { return symbolFactory.newSymbol("LT", LT); }
+  ">="          { return symbolFactory.newSymbol("GEQ", GEQ); }
+  ">"           { return symbolFactory.newSymbol("GT", GT); }
+  "="           { return symbolFactory.newSymbol("EQ", EQ); }
+  "!="          { return symbolFactory.newSymbol("NEQ", NEQ); }
+  "=="          { return symbolFactory.newSymbol("EQEQ", EQEQ); }
+  "==="         { return symbolFactory.newSymbol("EQEQEQ", EQEQEQ); }  
+  ":="          { return symbolFactory.newSymbol("COLEQ", COLEQ); } 
+   "."          { return symbolFactory.newSymbol("DOT", DOT); }
+  ","           { return symbolFactory.newSymbol("COMMA", COMMA); }
+  ":"           { return symbolFactory.newSymbol("COLON", COLON); }
+  "{"           { return symbolFactory.newSymbol("LCURLYBRACKET", LCURLYBRACKET); }
+  "}"           { return symbolFactory.newSymbol("RCURLYBRACKET", RCURLYBRACKET); }
+  "["           { return symbolFactory.newSymbol("LSQUAREBRACKET", LSQUAREBRACKET); }
+  "]"           { return symbolFactory.newSymbol("RSQUAREBRACKET", RSQUAREBRACKET); }
+  "ALL"         { return symbolFactory.newSymbol("ALL", ALL); }
+  "EX"          { return symbolFactory.newSymbol("EX", EX); }
+  "if"          { return symbolFactory.newSymbol("IF", IF); }
+  "else"        { return symbolFactory.newSymbol("ELSE", ELSE); }
+  "while"       { return symbolFactory.newSymbol("WHILE", WHILE); }
+  "do"          { return symbolFactory.newSymbol("DO", DO); }
+  "true"        { return symbolFactory.newSymbol("TRUE", TRUE); }
+  "false"       { return symbolFactory.newSymbol("FALSE", FALSE); }
+  "null"        { return symbolFactory.newSymbol("NULL", NULL); }
+  "Int"         { return symbolFactory.newSymbol("INT", INT); }
+  "Boolean"     { return symbolFactory.newSymbol("BOOLEAN", BOOLEAN); }  
+  "String"      { return symbolFactory.newSymbol("STRING", STRING); }
+  "Unit"        { return symbolFactory.newSymbol("UNIT", UNIT); }    
+  "Array"       { return symbolFactory.newSymbol("ARRAY", ARRAY); }
+  "Set"         { return symbolFactory.newSymbol("SET", SET); }
+  "union"       { return symbolFactory.newSymbol("UNION", UNION); }
+  "subsetOf"    { return symbolFactory.newSymbol("SUBSETOF", SUBSETOF); }
+  "intersect"   { return symbolFactory.newSymbol("INTERSECT", INTERSECT); }
+  "new"         { return symbolFactory.newSymbol("NEW", NEW); }
+  "var"         { return symbolFactory.newSymbol("VAR", VAR); }
+  "val"         { return symbolFactory.newSymbol("VAL", VAL); }
+  "def"         { return symbolFactory.newSymbol("DEF", DEF); }
+  "case"        { return symbolFactory.newSymbol("CASE", CASE); }
+  "import"      { return symbolFactory.newSymbol("IMPORT", IMPORT); }
+  "class"		{ return symbolFactory.newSymbol("CLASS", CLASS); }
+  "object"		{ return symbolFactory.newSymbol("OBJECT", OBJECT); }
+  "extends"		{ return symbolFactory.newSymbol("EXTENDS", EXTENDS); }
+  "ensuring"	{ return symbolFactory.newSymbol("ENSURING", ENSURING); }
+  "until"	    { return symbolFactory.newSymbol("UNTIL", UNTIL); }
+  "actor"		{ return symbolFactory.newSymbol("ACTOR", ACTOR); }  
+  "react"  		{ return symbolFactory.newSymbol("REACT", REACT); }
+  "act"  		{ return symbolFactory.newSymbol("ACT", ACT); }
+  "loop"  		{ return symbolFactory.newSymbol("LOOP", LOOP); }  
+  {IntLiteral}  { return symbolFactory.newSymbol("NUMBER", NUMBER, Integer.parseInt(yytext())); }
+  {Identifier}  { return symbolFactory.newSymbol("ID", ID, new String(yytext())); } 
+  
+  /*{Number}     { return symbolFactory.newSymbol("NUMBER", NUMBER, Integer.parseInt(yytext())); }*/
 }
-
 
 
 // error fallback
