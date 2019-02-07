@@ -31,9 +31,15 @@ init with {:
 scan with {: return lexer.next_token(); :};
 
 /* Terminals (tokens returned by the scanner). */
-terminal            SEMI, PLUS, MINUS, UMINUS, TIMES, LPAREN, RPAREN;
+//ADICIONEI OS TERMINAIS, O PROFESSOR TESTOU E VIU QUE TAVA DANDO ERRO POR CONTA DISSO
+terminal            SEMI, PLUS, MINUS, UMINUS, TIMES, LPAREN, RPAREN, EXTENDS;
 terminal Integer    NUMBER;        // our scanner provides numbers as integers
-
+terminal BOOLEAN, COLEQ,COMMA,  COLON,ARRAY,FALSE,WHILE,REACT,UNION,UNTIL,ACTOR;
+terminal CLASS,MINUSMINUS,LEQ,NEQ,AND,DOT,DIV,NOT,MOD,GEQ,NEW,ALL,DEF,ACT,INT;
+terminal SET,VAL,VAR,ENSURING,SUBSETOF,DOUBLEARROW,EQEQ,NULL,ELSE,LOOP,TRUE,UNIT;
+terminal CASE,INTERSECT,UNDERLINE,RANNOT,ATSIGN,DOLLAR,LANNOT,EQEQEQ,IMPORT,OBJECT;
+terminal STRING,RSQUAREBRACKET,LSQUAREBRACKET,OR,GT,EQ,LT,EX,IF,DO,RCURLYBRACKET;
+terminal LCURLYBRACKET,ID;
 /* Non terminals */
 non terminal            expr_list;
 non terminal Integer    expr;      // used to store evaluated subexpressions
