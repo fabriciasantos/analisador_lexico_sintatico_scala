@@ -10,6 +10,7 @@ import cup.example.Lexer;
 import java.io.IOException;
 import java.io.File;
 import java.io.FileInputStream;
+import cup.example.*;
 
 parser code {:
   protected Lexer lexer;
@@ -32,19 +33,58 @@ scan with {: return lexer.next_token(); :};
 
 /* Terminals (tokens returned by the scanner). */
 terminal            SEMI, PLUS, MINUS, UMINUS, TIMES, LPAREN, RPAREN;
-terminal Integer    NUMBER;        // our scanner provides numbers as integers
+terminal Integer   	NUMBER;        // our scanner provides numbers as integers
+
+terminal IF, AND, OR, NOT, MINUSMINUS, UNDERLINE, DIV, LANNOT, RANNOT, MOD, DOLLAR, ATSIGN, LEQ, DOUBLEARROW, 
+LT, GEQ, GT, EQ, NEQ, EQEQ, EQEQEQ, COLEQ, DOT, COMMA, COLON, LCURLYBRACKET, RCURLYBRACKET, LSQUAREBRACKET,
+ RSQUAREBRACKET, ELSE, WHILE, DO, TRUE, FALSE, NULL, INT, BOOLEAN, STRING, NEW, VAR, VAL, DEF, CASE, IMPORT, 
+ CLASS, OBJECT, EXTENDS, UNTIL, LOOP, IDENTIFIER, ARRAY, UNIT, SET;
+ 
+terminal string ID;
 
 /* Non terminals */
-non terminal            expr_list;
-non terminal Integer    expr;      // used to store evaluated subexpressions
+/*non terminal            expr_list;
+non terminal Integer    expr; */
+non terminal program;     // used to store evaluated subexpressions
+non terminal Top;
+non terminal ScalaProgram;
+non terminal Import;
+non terminal ImportDeclaration;
+non terminal ImportDeclarations;
+non terminal Predicates;
+non terminal ScalaObject;
+non terminal ImportExprs; 
+non terminal ImportExpr;
+non terminal PathElem;
+non terminal PredStats;
+non terminal PredStat;
+non terminal Expr;
+non terminal VarDeclaration;
+non terminal Variable;
+non terminal Type;
+non terminal Declarations;
 
 /* Precedences */
 precedence left PLUS, MINUS;
 precedence left TIMES;
 precedence left UMINUS;
+precedence left OR;
+precedence left AND;
+precedence left EQ, COLEQ;
+precedence left NEQ;
+precedence right ELSE;
+precedence right DOUBLEARROW;
+precedence nonassoc GT, LEQ, LT, GEQ, EQEQ, EQEQEQ, ATSIGN, UNTIL;
+precedence left PLUS, MINUS, MINUSMINUS;
+precedence left TIMES, DIV, MOD;
+precedence left NOT, DOLLAR;
+precedence left	DOT;
+precedence left LPAREN;
+
 
 /* The grammar rules */
-expr_list ::= expr_list expr:e SEMI         {: System.out.println(e); :}
+start with Top;
+/*expr_list ::= expr_list expr:e SEMI         {: System.out.println(e); :}
             | expr:e SEMI                   {: System.out.println(e); :}
             ;
             
@@ -55,5 +95,59 @@ expr      ::= expr:e1 PLUS  expr:e2         {: RESULT = e1+e2;        :}
              %prec UMINUS
              | LPAREN expr:e RPAREN	         {: RESULT = e;           :}
              | NUMBER:n	                     {: RESULT = n;           :}
-             ;
+             ;*/
        
+Top               ::= ScalaProgram:scp
+                   {: RESULT = scp; :}
+                   ;
+ScalaProgram      ::= Import ScalaObject:so
+                   {: RESULT = so; :}
+                   |  Predicates:ps Import ScalaObject:so
+                   {: RESULT =ps;so;   :} //ver o que tem para retornar
+                   ;
+
+ScalaObject       ::= OBJECT ID:id LCURLYBRACKET Declarations:ds RCURLYBRACKET
+                   {: RESULT =id;ds;  :} //ver o que tem para retornar
+                   ;
+                   
+Import            ::= 
+                   |  ImportDeclarations
+                   ;
+                   
+ImportDeclaration ::= IMPORT ImportExprs
+                   ;
+                   
+ImportDeclarations::= ImportDeclaration
+                   |  ImportDeclarations ImportDeclaration 
+                   ;  
+                   
+Predicates        ::= LANNOT PredStats:ps RANNOT
+                   {: RESULT = ps; :}
+                   ;
+ImportExprs       ::= ImportExpr
+                   |  ImportExprs COMMA ImportExpr
+                   ;
+                   
+ImportExpr        ::= PathElem:pe
+                   |  ImportExpr DOT PathElem:pe
+                   ;
+                   
+PathElem          ::= ID:id
+                   |  UNDERLINE
+                   ; //isso aqui quer dizer import java.io._
+
+Type              ::= UNIT
+                   {: RESULT = new UnitType(); :}
+                   |  ARRAY LSQUAREBRACKET Type:t RSQUAREBRACKET
+                   {: RESULT = new ArrayType(t); :}
+                   |  SET LSQUAREBRACKET Type:t RSQUAREBRACKET
+                   {: RESULT = new SetType(t); :}                   
+                   |  INT
+                   {: RESULT = new IntegerType(); :}
+                   |  STRING
+                   {: RESULT = new StringType(); :}
+                   |  BOOLEAN
+                   {: RESULT = new BooleanType(); :}
+                   |  ID:id
+                   {: RESULT = new ClassType("sc_" + id); :}                   
+                   ;

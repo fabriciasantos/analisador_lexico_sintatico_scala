@@ -61,8 +61,12 @@ Whitespace = [ \t\f] | {Newline}
 InputCharacter = [^\r\n]
 
 Sign           = "+" | "-"
-IntLiteral     = {Sign}? (0 | [1-9][0-9]*)
+IntLiteral     = (0 | [1-9][0-9]*)
+/*IntLiteral     = {Sign}? (0 | [1-9][0-9]*)*/
 Identifier     = [a-zA-Z][a-zA-Z0-9_']* 
+
+
+
 
 /* comments */
 Comment = {TraditionalComment} | {EndOfLineComment}
@@ -71,7 +75,7 @@ TraditionalComment = "/*" [^*:] ~"*/" | "/*" "*"+ "/"
 EndOfLineComment = "//" {InputCharacter}* {Newline}
 
 
-ident = ([:jletter:] | "_" ) ([:jletterdigit:] | [:jletter:] | "_" )*
+/* ident = ([:jletter:] | "_" ) ([:jletterdigit:] | [:jletter:] | "_" )* */
 
 
 %eofval{
@@ -94,8 +98,8 @@ ident = ([:jletter:] | "_" ) ([:jletterdigit:] | [:jletter:] | "_" )*
   "("          	{ return symbolFactory.newSymbol("LPAREN", LPAREN); }
   ")"          	{ return symbolFactory.newSymbol("RPAREN", RPAREN); }
   "&&"         	{ return symbolFactory.newSymbol("AND", AND); } 
-  "||"         	{ return symbolFactory.newSymbol("OR",OR); } 
-  "!"          	{ return symbolFactory.newSymbol("NOT", NOT); }
+  "||"          { return symbolFactory.newSymbol("OR", AND); } 
+  "!"           { return symbolFactory.newSymbol("NOT", NOT); }
   "--"         	{ return symbolFactory.newSymbol("MINUSMINUS", MINUSMINUS); }
   "_"          	{ return symbolFactory.newSymbol("UNDERLINE", UNDERLINE); }
   "/"          	{ return symbolFactory.newSymbol("DIV", DIV); }
@@ -114,15 +118,13 @@ ident = ([:jletter:] | "_" ) ([:jletterdigit:] | [:jletter:] | "_" )*
   "=="          { return symbolFactory.newSymbol("EQEQ", EQEQ); }
   "==="         { return symbolFactory.newSymbol("EQEQEQ", EQEQEQ); }  
   ":="          { return symbolFactory.newSymbol("COLEQ", COLEQ); } 
-   "."          { return symbolFactory.newSymbol("DOT", DOT); }
+  "."           { return symbolFactory.newSymbol("DOT", DOT); }
   ","           { return symbolFactory.newSymbol("COMMA", COMMA); }
   ":"           { return symbolFactory.newSymbol("COLON", COLON); }
   "{"           { return symbolFactory.newSymbol("LCURLYBRACKET", LCURLYBRACKET); }
   "}"           { return symbolFactory.newSymbol("RCURLYBRACKET", RCURLYBRACKET); }
   "["           { return symbolFactory.newSymbol("LSQUAREBRACKET", LSQUAREBRACKET); }
-  "]"           { return symbolFactory.newSymbol("RSQUAREBRACKET", RSQUAREBRACKET); }
-  "ALL"         { return symbolFactory.newSymbol("ALL", ALL); }
-  "EX"          { return symbolFactory.newSymbol("EX", EX); }
+  "]"           { return symbolFactory.newSymbol("RSQUAREBRACKET", RSQUAREBRACKET); } 
   "if"          { return symbolFactory.newSymbol("IF", IF); }
   "else"        { return symbolFactory.newSymbol("ELSE", ELSE); }
   "while"       { return symbolFactory.newSymbol("WHILE", WHILE); }
@@ -132,13 +134,7 @@ ident = ([:jletter:] | "_" ) ([:jletterdigit:] | [:jletter:] | "_" )*
   "null"        { return symbolFactory.newSymbol("NULL", NULL); }
   "Int"         { return symbolFactory.newSymbol("INT", INT); }
   "Boolean"     { return symbolFactory.newSymbol("BOOLEAN", BOOLEAN); }  
-  "String"      { return symbolFactory.newSymbol("STRING", STRING); }
-  "Unit"        { return symbolFactory.newSymbol("UNIT", UNIT); }    
-  "Array"       { return symbolFactory.newSymbol("ARRAY", ARRAY); }
-  "Set"         { return symbolFactory.newSymbol("SET", SET); }
-  "union"       { return symbolFactory.newSymbol("UNION", UNION); }
-  "subsetOf"    { return symbolFactory.newSymbol("SUBSETOF", SUBSETOF); }
-  "intersect"   { return symbolFactory.newSymbol("INTERSECT", INTERSECT); }
+  "String"      { return symbolFactory.newSymbol("STRING", STRING); }  
   "new"         { return symbolFactory.newSymbol("NEW", NEW); }
   "var"         { return symbolFactory.newSymbol("VAR", VAR); }
   "val"         { return symbolFactory.newSymbol("VAL", VAL); }
@@ -147,19 +143,17 @@ ident = ([:jletter:] | "_" ) ([:jletterdigit:] | [:jletter:] | "_" )*
   "import"      { return symbolFactory.newSymbol("IMPORT", IMPORT); }
   "class"		{ return symbolFactory.newSymbol("CLASS", CLASS); }
   "object"		{ return symbolFactory.newSymbol("OBJECT", OBJECT); }
-  "extends"		{ return symbolFactory.newSymbol("EXTENDS", EXTENDS); }
-  "ensuring"	{ return symbolFactory.newSymbol("ENSURING", ENSURING); }
-  "until"	    { return symbolFactory.newSymbol("UNTIL", UNTIL); }
-  "actor"		{ return symbolFactory.newSymbol("ACTOR", ACTOR); }  
-  "react"  		{ return symbolFactory.newSymbol("REACT", REACT); }
-  "act"  		{ return symbolFactory.newSymbol("ACT", ACT); }
+  "extends"		{ return symbolFactory.newSymbol("EXTENDS", EXTENDS); }  
+  "until"	    { return symbolFactory.newSymbol("UNTIL", UNTIL); } 
   "loop"  		{ return symbolFactory.newSymbol("LOOP", LOOP); }  
+  "array"		{ return symbolFactory.newSymbol("ARRAY", ARRAY); }
+  "Unit"        { return symbolFactory.newSymbol("UNIT", UNIT); }
+  "Set"         { return symbolFactory.newSymbol("SET", SET); }
+  
   {IntLiteral}  { return symbolFactory.newSymbol("NUMBER", NUMBER, Integer.parseInt(yytext())); }
   {Identifier}  { return symbolFactory.newSymbol("ID", ID, new String(yytext())); } 
-  
-  /*{Number}     { return symbolFactory.newSymbol("NUMBER", NUMBER, Integer.parseInt(yytext())); }*/
+    
 }
-
 
 // error fallback
 .|\n          { emit_warning("Unrecognized character '" +yytext()+"' -- ignored"); }
