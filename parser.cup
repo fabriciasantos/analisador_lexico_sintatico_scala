@@ -33,8 +33,6 @@ scan with {: return lexer.next_token(); :};
 
 /* Terminals (tokens returned by the scanner). */
 terminal            SEMI, PLUS, MINUS, UMINUS, TIMES, LPAREN, RPAREN;
-//ADICIONEI OS TERMINAIS, O PROFESSOR TESTOU E VIU QUE TAVA DANDO ERRO POR CONTA DISSO
-terminal            SEMI, PLUS, MINUS, UMINUS, TIMES, LPAREN, RPAREN, EXTENDS;
 terminal Integer   	NUMBER;        // our scanner provides numbers as integers
 terminal BOOLEAN, COLEQ,COMMA,  COLON,ARRAY,FALSE,WHILE,REACT,UNION,UNTIL,ACTOR;
 terminal CLASS,MINUSMINUS,LEQ,NEQ,AND,DOT,DIV,NOT,MOD,GEQ,NEW,ALL,DEF,ACT,INT;
@@ -70,7 +68,8 @@ non terminal VarDeclaration;
 non terminal Variable;
 non terminal Type;
 non terminal Declarations;
-
+non terminal VarDeclaration;
+non terminal Variable;
 /* Precedences */
 precedence left PLUS, MINUS;
 precedence left TIMES;
@@ -158,3 +157,15 @@ Type              ::= UNIT
                    |  ID:id
                    {: RESULT = new ClassType("sc_" + id); :}                   
                    ;
+
+VarDeclaration    ::= VAR Variable:v COLON Type:t EQ Expr:e
+                   {: RESULT = new VarDeclaration(v.name(), t, e); :}
+                   |  VAL Variable:v COLON Type:t EQ Expr:e
+                   {: RESULT = new VarDeclaration(v.name(), t, e); :}
+                   ;
+                   
+Variable          ::= ID:id
+                   {: RESULT = id; :}
+                   |  DOLLAR ID:id
+                   {: RESULT = id; :}
+                   ;      
