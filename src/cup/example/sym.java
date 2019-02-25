@@ -8,78 +8,74 @@ package cup.example;
 /** CUP generated interface containing symbol constants. */
 public interface sym {
   /* terminals */
-  public static final int TIMES = 6;
-  public static final int ENSURING = 39;
-  public static final int GT = 62;
-  public static final int LCURLYBRACKET = 69;
-  public static final int SEMI = 2;
-  public static final int UNTIL = 19;
-  public static final int GEQ = 30;
-  public static final int UNDERLINE = 50;
-  public static final int COMMA = 12;
-  public static final int RPAREN = 8;
-  public static final int EQEQEQ = 55;
-  public static final int SUBSETOF = 40;
-  public static final int ALL = 32;
-  public static final int LT = 64;
-  public static final int LPAREN = 7;
-  public static final int LOOP = 45;
-  public static final int FALSE = 15;
-  public static final int NOT = 28;
-  public static final int RSQUAREBRACKET = 59;
-  public static final int DEF = 33;
-  public static final int ARRAY = 14;
-  public static final int OBJECT = 57;
-  public static final int VAR = 38;
-  public static final int ATSIGN = 52;
-  public static final int EX = 65;
-  public static final int VAL = 37;
-  public static final int EQ = 63;
-  public static final int MOD = 29;
-  public static final int LSQUAREBRACKET = 60;
-  public static final int DOLLAR = 53;
-  public static final int CLASS = 21;
-  public static final int COLEQ = 11;
-  public static final int NUMBER = 9;
-  public static final int TRUE = 46;
-  public static final int PLUS = 3;
-  public static final int UNIT = 47;
-  public static final int WHILE = 16;
-  public static final int UNION = 18;
-  public static final int DOUBLEARROW = 41;
-  public static final int EXTENDS = 70;
-  public static final int BOOLEAN = 10;
-  public static final int DO = 67;
-  public static final int DIV = 27;
-  public static final int ELSE = 44;
-  public static final int DOT = 26;
-  public static final int RCURLYBRACKET = 68;
-  public static final int INT = 35;
-  public static final int ACTOR = 20;
-  public static final int EQEQ = 42;
-  public static final int NULL = 43;
-  public static final int ACT = 34;
-  public static final int EOF = 0;
-  public static final int INTERSECT = 49;
-  public static final int IMPORT = 56;
-  public static final int MINUS = 4;
-  public static final int OR = 61;
-  public static final int SET = 36;
-  public static final int error = 1;
-  public static final int IF = 66;
-  public static final int ID = 71;
-  public static final int MINUSMINUS = 22;
-  public static final int COLON = 13;
-  public static final int RANNOT = 51;
-  public static final int CASE = 48;
-  public static final int NEW = 31;
-  public static final int LANNOT = 54;
-  public static final int STRING = 58;
-  public static final int NEQ = 24;
-  public static final int AND = 25;
+  public static final int VAL = 36;
   public static final int UMINUS = 5;
-  public static final int LEQ = 23;
+  public static final int UNIT = 43;
+  public static final int RCURLYBRACKET = 63;
+  public static final int ATSIGN = 47;
+  public static final int CASE = 44;
+  public static final int ENSURING = 66;
+  public static final int LPAREN = 7;
+  public static final int SEMI = 2;
+  public static final int UNDERLINE = 45;
+  public static final int INT = 34;
+  public static final int ARRAY = 14;
+  public static final int MINUS = 4;
+  public static final int RPAREN = 8;
+  public static final int LSQUAREBRACKET = 55;
+  public static final int NOT = 27;
+  public static final int AND = 24;
+  public static final int LT = 59;
+  public static final int ACTOR = 19;
+  public static final int OR = 56;
+  public static final int OBJECT = 52;
+  public static final int COMMA = 12;
+  public static final int CLASS = 20;
+  public static final int DIV = 26;
+  public static final int UNTIL = 18;
+  public static final int GEQ = 29;
+  public static final int PLUS = 3;
+  public static final int IF = 61;
+  public static final int ID = 67;
+  public static final int DOT = 25;
+  public static final int EOF = 0;
+  public static final int BOOLEAN = 10;
+  public static final int MINUSMINUS = 21;
+  public static final int TRUE = 42;
+  public static final int NEW = 30;
+  public static final int error = 1;
+  public static final int EX = 60;
+  public static final int NULL = 40;
+  public static final int EQEQ = 39;
+  public static final int NUMBER = 9;
+  public static final int MOD = 28;
+  public static final int NEQ = 23;
   public static final int REACT = 17;
+  public static final int EQ = 58;
+  public static final int IMPORT = 51;
+  public static final int TIMES = 6;
+  public static final int RSQUAREBRACKET = 54;
+  public static final int COLON = 13;
+  public static final int ELSE = 41;
+  public static final int ACT = 33;
+  public static final int LANNOT = 49;
+  public static final int WHILE = 16;
+  public static final int DOLLAR = 48;
+  public static final int EXTENDS = 65;
+  public static final int LEQ = 22;
+  public static final int STRING = 53;
+  public static final int RANNOT = 46;
+  public static final int DEF = 32;
+  public static final int ALL = 31;
+  public static final int FALSE = 15;
+  public static final int COLEQ = 11;
+  public static final int GT = 57;
+  public static final int LCURLYBRACKET = 64;
+  public static final int DOUBLEARROW = 38;
+  public static final int VAR = 37;
+  public static final int DO = 62;
+  public static final int SET = 35;
+  public static final int EQEQEQ = 50;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -99,7 +95,6 @@ public interface sym {
   "FALSE",
   "WHILE",
   "REACT",
-  "UNION",
   "UNTIL",
   "ACTOR",
   "CLASS",
@@ -120,17 +115,13 @@ public interface sym {
   "SET",
   "VAL",
   "VAR",
-  "ENSURING",
-  "SUBSETOF",
   "DOUBLEARROW",
   "EQEQ",
   "NULL",
   "ELSE",
-  "LOOP",
   "TRUE",
   "UNIT",
   "CASE",
-  "INTERSECT",
   "UNDERLINE",
   "RANNOT",
   "ATSIGN",
@@ -152,6 +143,7 @@ public interface sym {
   "RCURLYBRACKET",
   "LCURLYBRACKET",
   "EXTENDS",
+  "ENSURING",
   "ID"
   };
 }

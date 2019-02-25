@@ -144,11 +144,16 @@ EndOfLineComment = "//" {InputCharacter}* {Newline}
   "class"		{ return symbolFactory.newSymbol("CLASS", CLASS); }
   "object"		{ return symbolFactory.newSymbol("OBJECT", OBJECT); }
   "extends"		{ return symbolFactory.newSymbol("EXTENDS", EXTENDS); }  
-  "until"	    { return symbolFactory.newSymbol("UNTIL", UNTIL); } 
-  "loop"  		{ return symbolFactory.newSymbol("LOOP", LOOP); }  
+  "until"	    { return symbolFactory.newSymbol("UNTIL", UNTIL); }  
   "array"		{ return symbolFactory.newSymbol("ARRAY", ARRAY); }
   "Unit"        { return symbolFactory.newSymbol("UNIT", UNIT); }
   "Set"         { return symbolFactory.newSymbol("SET", SET); }
+  "actor"		{ return symbolFactory.newSymbol("ACTOR", ACTOR); }  
+  "react"  		{ return symbolFactory.newSymbol("REACT", REACT); }
+  "act"  		{ return symbolFactory.newSymbol("ACT", ACT); }
+  "all"  		{ return symbolFactory.newSymbol("ALL", ALL); }
+  "ex"          { return symbolFactory.newSymbol("EX", EX); }
+  "ensuring"	{ return symbolFactory.newSymbol("ENSURING", ENSURING); }
   
   {IntLiteral}  { return symbolFactory.newSymbol("NUMBER", NUMBER, Integer.parseInt(yytext())); }
   {Identifier}  { return symbolFactory.newSymbol("ID", ID, new String(yytext())); } 

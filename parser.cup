@@ -34,11 +34,12 @@ scan with {: return lexer.next_token(); :};
 /* Terminals (tokens returned by the scanner). */
 terminal            SEMI, PLUS, MINUS, UMINUS, TIMES, LPAREN, RPAREN;
 terminal Integer   	NUMBER;        // our scanner provides numbers as integers
-terminal BOOLEAN, COLEQ, COMMA, COLON,ARRAY,FALSE,WHILE,REACT,UNION,UNTIL,ACTOR;
-terminal CLASS,MINUSMINUS,LEQ,NEQ,AND,DOT,DIV,NOT,MOD,GEQ,NEW,ALL,DEF,ACT,INT;
-terminal SET,VAL,VAR,ENSURING,SUBSETOF,DOUBLEARROW,EQEQ,NULL,ELSE,LOOP,TRUE,UNIT;
-terminal CASE,INTERSECT,UNDERLINE,RANNOT,ATSIGN,DOLLAR,LANNOT,EQEQEQ,IMPORT,OBJECT;
-terminal STRING,RSQUAREBRACKET,LSQUAREBRACKET,OR,GT,EQ,LT,EX,IF,DO,RCURLYBRACKET, LCURLYBRACKET, EXTENDS;
+terminal BOOLEAN, COLEQ, COMMA, COLON, ARRAY, FALSE, WHILE, REACT,  UNTIL, ACTOR;
+terminal CLASS, MINUSMINUS, LEQ, NEQ , AND, DOT, DIV, NOT, MOD, GEQ, NEW, ALL, DEF, ACT, INT;
+terminal SET, VAL, VAR, DOUBLEARROW, EQEQ, NULL, ELSE, TRUE, UNIT;
+terminal CASE, UNDERLINE, RANNOT, ATSIGN, DOLLAR, LANNOT, EQEQEQ, IMPORT, OBJECT;
+terminal STRING, RSQUAREBRACKET, LSQUAREBRACKET, OR, GT, EQ, LT, EX, IF, DO, RCURLYBRACKET, 
+LCURLYBRACKET, EXTENDS, ENSURING;
 terminal String ID;
  
 
@@ -63,6 +64,22 @@ non terminal VarDeclaration;
 non terminal Variable;
 non terminal Type;
 non terminal Declarations;
+non terminal Declaration;
+non terminal ActorStats;
+non terminal ActorStat;
+non terminal FunDeclaration;
+non terminal ClassDeclaration;
+non terminal React;
+non terminal ParamClause;
+non terminal FunDeclarationWOPost;
+non terminal ParamsComma;
+non terminal ExprsComma;
+non terminal ArgumentExprs;
+non terminal BinaryExpression;
+non terminal BlockStats;
+non terminal Block;
+non terminal BlockStat;
+non terminal Binding;
 
 /* Precedences */
 precedence left PLUS, MINUS;
@@ -137,7 +154,7 @@ PathElem          ::= ID:id
                    |  UNDERLINE
                    ; //isso aqui quer dizer import java.io._
 
-/*Type              ::= UNIT:s
+Type              ::= UNIT:s
                    //{: RESULT = s :}
                    |  ARRAY:a LSQUAREBRACKET Type:t RSQUAREBRACKET
                    //{: RESULT = a :}
@@ -152,16 +169,212 @@ PathElem          ::= ID:id
                    |  ID:id
                    //{: RESULT = id :}                   
                    ; 
-*/
-
-VarDeclaration    ::= VAR Variable:v COLON Type:t EQ Expr:e
-                   //{: RESULT = new VarDeclaration(v.name(), t, e); :}
-                   |  VAL Variable:v COLON Type:t EQ Expr:e
-                   //{: RESULT = new VarDeclaration(v.name(), t, e); :}
+Declarations      ::= Declaration:d
+                   //{: RESULT =  :}
+                   |  Declarations:ds Declaration:d
+                   //{: RESULT =  :}
                    ;
+
+Declaration       ::= VAL Variable:v COLON Type:t EQ ACTOR LCURLYBRACKET ActorStats:es RCURLYBRACKET
+                   //{: RESULT =  :}
+                   |  FunDeclaration:fd
+                   //{: RESULT =  :}
+                   |  Predicates:ps
+                   //{: RESULT =  :}
+                   |  VarDeclaration:vd
+                   //{: RESULT =  :}                   
+                   |  ClassDeclaration:cd
+                   //{: RESULT =  :}
+                   ;
+ActorStats        ::= ActorStat:a
+				   //{: RESULT = list; :}
+                   |  ActorStats:as ActorStat:a
+                   //{: RESULT = as; :} 
+                   ;
+
+ActorStat         ::= Expr:e
+				   //{: RESULT =  :}
+                   |  Declaration:d
+                   //{: RESULT =  :}
+                   |  React:r
+                   //{: RESULT =  :}
+                   ;
+                   
+VarDeclaration    ::= VAR Variable:v COLON Type:t EQ Expr:e
+                   //{: RESULT = }
+                   |  VAL Variable:v COLON Type:t EQ Expr:e
+                   //{: RESULT = :}
+                   ;
+                   
+ClassDeclaration  ::= CLASS ID:id1 ParamClause:ps EXTENDS ID:id2 LCURLYBRACKET ActorStats:es RCURLYBRACKET
+                   //{: RESULT =  :}
+                   ;   
+                                 
+FunDeclaration    ::= FunDeclarationWOPost:f ENSURING LPAREN Variable:rs DOUBLEARROW Expr:pst RPAREN
+                   //{: RESULT =  :}
+                   |  FunDeclarationWOPost:f
+                   //{: RESULT = :}
+                   ;                                      
+
+FunDeclarationWOPost::= DEF ID:id ParamClause:ps COLON Type:t EQ Expr:e
+                   //{: RESULT = :}
+                   |  DEF ID:id ParamClause:ps EQ Expr:e
+                   //{: RESULT = :}
+                   |  DEF ID:id ParamClause:ps Block:b
+                   //{: RESULT = :}
+                   |  DEF ACT:a ParamClause:ps LCURLYBRACKET ActorStats:es RCURLYBRACKET
+                   //{: RESULT =:}
+                   ;                                                  
                    
 Variable          ::= ID:id
                    //{: RESULT = id; :}
                    |  DOLLAR ID:id
                    //{: RESULT = id; :}
                    ;      
+                   
+ParamClause       ::= LPAREN ParamsComma:ps RPAREN
+                   //{: RESULT = ps; :}
+                   |
+                   //{: RESULT =  :}
+                   |  LPAREN RPAREN
+                   //{:  RESULT =  :}                   
+                   ;                   
+                   
+PredStats         ::= PredStat:p
+				   //{: RESULT =  :}
+                   |  PredStats:ps PredStat:p
+                   //{: RESULT =  :}
+                   ;
+
+PredStat          ::= Expr:e
+				   //{: RESULT = :}
+                   |  VarDeclaration:vd
+                   //{: RESULT =  :}
+                   |  Expr:e ATSIGN LCURLYBRACKET PredStats:ps RCURLYBRACKET
+				   //{: RESULT = :}                   
+                   ;                   
+ExprsComma        ::= Expr:e
+				   //{:  RESULT =  :}
+                   |  ExprsComma:es COMMA Expr:e
+                   //{: RESULT =  :}
+                   ;    
+                   
+Expr              ::= ALL:q ID:bv COLON Type:t DOT Expr:e
+                   //{: RESULT =  :} 
+                   |  EX:q ID:bv COLON Type:t DOT Expr:e
+                   //{: RESULT =  :} 
+                   |  LPAREN Expr:e RPAREN
+                   //{: RESULT = :}
+                   |  IF LPAREN Expr:e1 RPAREN Expr:e2 ELSE Expr:e3
+                   //{: RESULT =  :}
+                   |  WHILE LPAREN Expr:e1 RPAREN Expr:e2
+                   //{: RESULT =  :}                   
+                   |  MINUS Expr:e
+                   //{: RESULT  :}
+                   |  NOT Expr:e
+                   //{: RESULT =  :}
+                   |  ID:id ArgumentExprs:as
+                   //{: RESULT =  :}
+                   |  DOLLAR ID:id ArgumentExprs:as
+                   //{: RESULT =  :}                   
+                   |  ID:id ArgumentExprs:e1 ArgumentExprs:e2
+                   //{: RESULT =  :}
+                   |  DOLLAR ID:id ArgumentExprs:e1 ArgumentExprs:e2
+                   //{: RESULT =  :}                   
+                   |  ARRAY ArgumentExprs:as
+                   //{: RESULT =  :}
+                   |  SET ArgumentExprs:as
+                   //{: RESULT =  :}                   
+                   |  NEW ARRAY LSQUAREBRACKET Type:t RSQUAREBRACKET LPAREN Expr:e RPAREN
+                   //{: RESULT =  :}
+                   |  BinaryExpression:b
+                   //{: RESULT =  :}
+                   |  Variable:v
+                   //{: RESULT =  :}
+                   |  NEW ID:id ArgumentExprs:as
+                   //{: RESULT =  :}
+                   |  NEW ID:id
+                   //{: RESULT =  :} 
+                   |  Block:b
+                   //{: RESULT =  :}
+                   |  NUMBER:n
+                   //{: RESULT =  :}
+                   |  NULL:n
+                   //{: RESULT = ; :}
+                   |  TRUE:t
+                   //{: RESULT =  :}
+                   |  FALSE:f
+                   //{: RESULT =  :}                   
+                   ;                   
+ArgumentExprs     ::= LPAREN RPAREN
+                   //{: RESULT =  :}
+                   |  LPAREN ExprsComma:es RPAREN
+                   //{: RESULT = es; :}
+                   ;   
+                   
+BinaryExpression  ::= IF LPAREN Expr:e1 RPAREN Expr:e2
+                   //{: RESULT = :}
+                   |  Expr:e1 OR:p Expr:e2
+                   //{: RESULT = :}                    
+                   |  Expr:e1 AND:p Expr:e2
+                   //{: RESULT = :}                   
+                   |  Expr:e1 EQEQ:p Expr:e2
+                   //{: RESULT = :}
+                   |  Expr:e1 EQ:p Expr:e2
+                   //{: RESULT = :}                  
+                   |  Expr:e1 NEQ:p Expr:e2
+                   //{: RESULT =  :}
+                   |  Expr:e1 EQEQEQ:p Expr:e2
+                   //{: RESULT = :}                   
+                   |  Expr:e1 LT:p Expr:e2
+                   //{: RESULT = :}
+                   |  Expr:e1 LEQ:p Expr:e2
+                   //{: RESULT = :}
+                   |  Expr:e1 GT:p Expr:e2
+                   //{: RESULT = :}
+                   |  Expr:e1 GEQ:p Expr:e2
+                   //{: RESULT = :}
+                   |  Expr:e1 PLUS:p Expr:e2
+                   //{: RESULT = :}
+                   |  Expr:e1 MINUS:p Expr:e2
+                   //{: RESULT = :}
+                   |  Expr:e1 MINUSMINUS:p Expr:e2
+                   //{: RESULT = :}
+                   |  Expr:e1 TIMES:p Expr:e2
+                   //{: RESULT = :}
+                   |  Expr:e1 DIV:p Expr:e2
+                   //{: RESULT = :}
+                   |  Expr:e1 MOD:p Expr:e2
+                   //{: RESULT = :}
+                   |  Expr:e1 DOT:p Expr:e2
+                   //{: RESULT = :}                  
+				   |  Expr:e1 UNTIL:p Expr:e2
+                   //{: RESULT = :}
+                   |  Binding:e1 DOUBLEARROW Expr:e2
+                   //{: RESULT = :}                   
+                   |  Expr:e1 NOT:p Expr:e2
+                   //{: RESULT =  :}
+                   ;
+                   
+Block             ::= LCURLYBRACKET BlockStats:es RCURLYBRACKET
+                   //{: RESULT = :}
+                   |  LCURLYBRACKET RCURLYBRACKET
+                   //{: RESULT = :}
+                   ;
+                   
+BlockStats        ::= BlockStat:b
+				   //{: RESULT =  :}
+                   |  BlockStats:bs BlockStat:b
+                   //{: RESULT =  :} 
+                   ;
+
+BlockStat         ::= Expr:e
+				   //{: RESULT =  :}
+                   |  Declaration:d
+                   //{: RESULT =  :}
+                   ;
+                   
+Binding           ::= Variable:v
+                   //{: RESULT =  :}
+                   ;           
+                 
