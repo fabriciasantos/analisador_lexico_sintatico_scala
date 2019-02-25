@@ -8,70 +8,78 @@ package cup.example;
 /** CUP generated interface containing symbol constants. */
 public interface sym {
   /* terminals */
-  public static final int VAL = 50;
-  public static final int UMINUS = 5;
-  public static final int UNIT = 61;
-  public static final int CASE = 52;
-  public static final int RCURLYBRACKET = 36;
-  public static final int ATSIGN = 21;
-  public static final int LPAREN = 7;
-  public static final int SEMI = 2;
-  public static final int INT = 45;
-  public static final int UNDERLINE = 15;
-  public static final int ARRAY = 60;
-  public static final int MINUS = 4;
-  public static final int RPAREN = 8;
-  public static final int LSQUAREBRACKET = 37;
-  public static final int NOT = 13;
-  public static final int AND = 11;
-  public static final int LT = 24;
-  public static final int OBJECT = 55;
-  public static final int OR = 12;
-  public static final int COMMA = 33;
-  public static final int CLASS = 54;
-  public static final int DIV = 16;
-  public static final int UNTIL = 57;
-  public static final int GEQ = 25;
-  public static final int LOOP = 58;
-  public static final int PLUS = 3;
-  public static final int IF = 10;
-  public static final int ID = 63;
-  public static final int DOT = 32;
-  public static final int BOOLEAN = 46;
-  public static final int EOF = 0;
-  public static final int MINUSMINUS = 14;
-  public static final int TRUE = 42;
-  public static final int NEW = 48;
-  public static final int error = 1;
-  public static final int NULL = 44;
-  public static final int EQEQ = 29;
-  public static final int NUMBER = 9;
-  public static final int MOD = 19;
-  public static final int NEQ = 28;
-  public static final int EQ = 27;
-  public static final int IMPORT = 53;
   public static final int TIMES = 6;
-  public static final int RSQUAREBRACKET = 38;
-  public static final int COLON = 34;
-  public static final int ELSE = 39;
-  public static final int WHILE = 40;
-  public static final int LANNOT = 17;
-  public static final int DOLLAR = 20;
-  public static final int EXTENDS = 56;
-  public static final int LEQ = 22;
-  public static final int STRING = 47;
-  public static final int RANNOT = 18;
-  public static final int DEF = 51;
-  public static final int FALSE = 43;
-  public static final int COLEQ = 31;
-  public static final int GT = 26;
-  public static final int VAR = 49;
-  public static final int LCURLYBRACKET = 35;
-  public static final int DOUBLEARROW = 23;
-  public static final int DO = 41;
-  public static final int SET = 62;
-  public static final int IDENTIFIER = 59;
-  public static final int EQEQEQ = 30;
+  public static final int ENSURING = 39;
+  public static final int GT = 62;
+  public static final int LCURLYBRACKET = 69;
+  public static final int SEMI = 2;
+  public static final int UNTIL = 19;
+  public static final int GEQ = 30;
+  public static final int UNDERLINE = 50;
+  public static final int COMMA = 12;
+  public static final int RPAREN = 8;
+  public static final int EQEQEQ = 55;
+  public static final int SUBSETOF = 40;
+  public static final int ALL = 32;
+  public static final int LT = 64;
+  public static final int LPAREN = 7;
+  public static final int LOOP = 45;
+  public static final int FALSE = 15;
+  public static final int NOT = 28;
+  public static final int RSQUAREBRACKET = 59;
+  public static final int DEF = 33;
+  public static final int ARRAY = 14;
+  public static final int OBJECT = 57;
+  public static final int VAR = 38;
+  public static final int ATSIGN = 52;
+  public static final int EX = 65;
+  public static final int VAL = 37;
+  public static final int EQ = 63;
+  public static final int MOD = 29;
+  public static final int LSQUAREBRACKET = 60;
+  public static final int DOLLAR = 53;
+  public static final int CLASS = 21;
+  public static final int COLEQ = 11;
+  public static final int NUMBER = 9;
+  public static final int TRUE = 46;
+  public static final int PLUS = 3;
+  public static final int UNIT = 47;
+  public static final int WHILE = 16;
+  public static final int UNION = 18;
+  public static final int DOUBLEARROW = 41;
+  public static final int EXTENDS = 70;
+  public static final int BOOLEAN = 10;
+  public static final int DO = 67;
+  public static final int DIV = 27;
+  public static final int ELSE = 44;
+  public static final int DOT = 26;
+  public static final int RCURLYBRACKET = 68;
+  public static final int INT = 35;
+  public static final int ACTOR = 20;
+  public static final int EQEQ = 42;
+  public static final int NULL = 43;
+  public static final int ACT = 34;
+  public static final int EOF = 0;
+  public static final int INTERSECT = 49;
+  public static final int IMPORT = 56;
+  public static final int MINUS = 4;
+  public static final int OR = 61;
+  public static final int SET = 36;
+  public static final int error = 1;
+  public static final int IF = 66;
+  public static final int ID = 71;
+  public static final int MINUSMINUS = 22;
+  public static final int COLON = 13;
+  public static final int RANNOT = 51;
+  public static final int CASE = 48;
+  public static final int NEW = 31;
+  public static final int LANNOT = 54;
+  public static final int STRING = 58;
+  public static final int NEQ = 24;
+  public static final int AND = 25;
+  public static final int UMINUS = 5;
+  public static final int LEQ = 23;
+  public static final int REACT = 17;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -83,59 +91,67 @@ public interface sym {
   "LPAREN",
   "RPAREN",
   "NUMBER",
-  "IF",
-  "AND",
-  "OR",
-  "NOT",
-  "MINUSMINUS",
-  "UNDERLINE",
-  "DIV",
-  "LANNOT",
-  "RANNOT",
-  "MOD",
-  "DOLLAR",
-  "ATSIGN",
-  "LEQ",
-  "DOUBLEARROW",
-  "LT",
-  "GEQ",
-  "GT",
-  "EQ",
-  "NEQ",
-  "EQEQ",
-  "EQEQEQ",
+  "BOOLEAN",
   "COLEQ",
-  "DOT",
   "COMMA",
   "COLON",
-  "LCURLYBRACKET",
-  "RCURLYBRACKET",
-  "LSQUAREBRACKET",
-  "RSQUAREBRACKET",
-  "ELSE",
-  "WHILE",
-  "DO",
-  "TRUE",
-  "FALSE",
-  "NULL",
-  "INT",
-  "BOOLEAN",
-  "STRING",
-  "NEW",
-  "VAR",
-  "VAL",
-  "DEF",
-  "CASE",
-  "IMPORT",
-  "CLASS",
-  "OBJECT",
-  "EXTENDS",
-  "UNTIL",
-  "LOOP",
-  "IDENTIFIER",
   "ARRAY",
-  "UNIT",
+  "FALSE",
+  "WHILE",
+  "REACT",
+  "UNION",
+  "UNTIL",
+  "ACTOR",
+  "CLASS",
+  "MINUSMINUS",
+  "LEQ",
+  "NEQ",
+  "AND",
+  "DOT",
+  "DIV",
+  "NOT",
+  "MOD",
+  "GEQ",
+  "NEW",
+  "ALL",
+  "DEF",
+  "ACT",
+  "INT",
   "SET",
+  "VAL",
+  "VAR",
+  "ENSURING",
+  "SUBSETOF",
+  "DOUBLEARROW",
+  "EQEQ",
+  "NULL",
+  "ELSE",
+  "LOOP",
+  "TRUE",
+  "UNIT",
+  "CASE",
+  "INTERSECT",
+  "UNDERLINE",
+  "RANNOT",
+  "ATSIGN",
+  "DOLLAR",
+  "LANNOT",
+  "EQEQEQ",
+  "IMPORT",
+  "OBJECT",
+  "STRING",
+  "RSQUAREBRACKET",
+  "LSQUAREBRACKET",
+  "OR",
+  "GT",
+  "EQ",
+  "LT",
+  "EX",
+  "IF",
+  "DO",
+  "RCURLYBRACKET",
+  "LCURLYBRACKET",
+  "EXTENDS",
   "ID"
   };
 }

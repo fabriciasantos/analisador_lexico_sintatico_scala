@@ -10,6 +10,7 @@ import cup.example.Lexer;
 import java.io.IOException;
 import java.io.File;
 import java.io.FileInputStream;
+import cup.example.*;
 import java_cup.runtime.ComplexSymbolFactory.Location;
 import java_cup.runtime.XMLElement;
 
@@ -34,16 +35,13 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\036\000\002\002\004\000\002\003\003\000\002\004" +
-    "\004\000\002\004\005\000\002\005\002\000\002\005\003" +
-    "\000\002\006\004\000\002\007\003\000\002\007\004\000" +
-    "\002\010\005\000\002\012\003\000\002\012\005\000\002" +
-    "\013\003\000\002\013\005\000\002\014\003\000\002\014" +
-    "\003\000\002\015\003\000\002\015\004\000\002\016\003" +
-    "\000\002\016\003\000\002\016\007\000\002\020\010\000" +
-    "\002\020\010\000\002\022\003\000\002\022\006\000\002" +
-    "\022\006\000\002\022\003\000\002\022\003\000\002\022" +
-    "\003\000\002\022\003" });
+    "\000\025\000\002\002\004\000\002\003\003\000\002\004" +
+    "\004\000\002\004\005\000\002\011\007\000\002\005\002" +
+    "\000\002\005\003\000\002\006\004\000\002\007\003\000" +
+    "\002\007\004\000\002\010\005\000\002\012\003\000\002" +
+    "\012\005\000\002\013\003\000\002\013\005\000\002\014" +
+    "\003\000\002\014\003\000\002\020\010\000\002\020\010" +
+    "\000\002\021\003\000\002\021\004" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -51,44 +49,25 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\072\000\006\023\011\067\004\001\002\000\006\021" +
-    "\065\101\064\001\002\000\004\002\000\001\002\000\002" +
-    "\001\002\000\004\002\062\001\002\000\004\067\004\001" +
-    "\002\000\006\063\016\064\022\001\002\000\004\067\ufffa" +
-    "\001\002\000\004\067\004\001\002\000\002\001\002\000" +
-    "\004\002\ufffe\001\002\000\002\001\002\000\010\024\053" +
-    "\063\016\064\022\001\002\000\012\024\ufff1\046\ufff1\063" +
-    "\ufff1\064\ufff1\001\002\000\014\024\uffef\027\046\046\uffef" +
-    "\063\uffef\064\uffef\001\002\000\002\001\002\000\012\024" +
-    "\uffee\046\uffee\063\uffee\064\uffee\001\002\000\004\044\025" +
-    "\001\002\000\020\057\034\060\033\061\031\076\035\077" +
-    "\026\100\032\101\027\001\002\000\006\035\uffea\050\uffea" +
-    "\001\002\000\006\035\uffe4\050\uffe4\001\002\000\004\035" +
-    "\044\001\002\000\006\035\uffe6\050\uffe6\001\002\000\004" +
-    "\047\041\001\002\000\006\035\uffe5\050\uffe5\001\002\000" +
-    "\006\035\uffe7\050\uffe7\001\002\000\004\047\036\001\002" +
-    "\000\020\057\034\060\033\061\031\076\035\077\026\100" +
-    "\032\101\027\001\002\000\004\050\040\001\002\000\006" +
-    "\035\uffe9\050\uffe9\001\002\000\020\057\034\060\033\061" +
-    "\031\076\035\077\026\100\032\101\027\001\002\000\004" +
-    "\050\043\001\002\000\006\035\uffe8\050\uffe8\001\002\000" +
-    "\002\001\002\000\012\024\uffeb\046\uffeb\063\uffeb\064\uffeb" +
-    "\001\002\000\004\045\047\001\002\000\006\063\016\064" +
-    "\022\001\002\000\010\046\052\063\016\064\022\001\002" +
-    "\000\012\024\ufff0\046\ufff0\063\ufff0\064\ufff0\001\002\000" +
-    "\012\024\uffed\046\uffed\063\uffed\064\uffed\001\002\000\004" +
-    "\067\ufff8\001\002\000\004\044\055\001\002\000\020\057" +
-    "\034\060\033\061\031\076\035\077\026\100\032\101\027" +
-    "\001\002\000\004\035\057\001\002\000\002\001\002\000" +
-    "\012\024\uffec\046\uffec\063\uffec\064\uffec\001\002\000\004" +
-    "\067\ufff9\001\002\000\004\002\001\001\002\000\004\002" +
-    "\uffff\001\002\000\010\042\ufff3\043\ufff3\067\ufff3\001\002" +
-    "\000\010\042\ufff2\043\ufff2\067\ufff2\001\002\000\006\043" +
-    "\073\067\ufffb\001\002\000\010\042\ufff5\043\ufff5\067\ufff5" +
-    "\001\002\000\010\042\071\043\ufff7\067\ufff7\001\002\000" +
-    "\006\021\065\101\064\001\002\000\010\042\ufff4\043\ufff4" +
-    "\067\ufff4\001\002\000\006\021\065\101\064\001\002\000" +
-    "\010\042\071\043\ufff6\067\ufff6\001\002" });
+    "\000\036\000\010\070\011\072\005\073\ufffc\001\002\000" +
+    "\004\002\000\001\002\000\006\064\031\111\030\001\002" +
+    "\000\004\073\015\001\002\000\004\002\026\001\002\000" +
+    "\006\072\005\073\ufffb\001\002\000\002\001\002\000\006" +
+    "\072\ufff9\073\ufff9\001\002\000\006\072\005\073\ufffc\001" +
+    "\002\000\004\073\015\001\002\000\004\111\017\001\002" +
+    "\000\004\002\ufffe\001\002\000\004\107\020\001\002\000" +
+    "\002\001\002\000\004\106\022\001\002\000\004\002\ufffd" +
+    "\001\002\000\004\065\024\001\002\000\006\072\ufff7\073" +
+    "\ufff7\001\002\000\006\072\ufff8\073\ufff8\001\002\000\004" +
+    "\002\001\001\002\000\004\002\uffff\001\002\000\012\016" +
+    "\ufff2\034\ufff2\072\ufff2\073\ufff2\001\002\000\012\016\ufff1" +
+    "\034\ufff1\072\ufff1\073\ufff1\001\002\000\010\016\037\072" +
+    "\ufffa\073\ufffa\001\002\000\012\016\ufff6\034\035\072\ufff6" +
+    "\073\ufff6\001\002\000\012\016\ufff4\034\ufff4\072\ufff4\073" +
+    "\ufff4\001\002\000\006\064\031\111\030\001\002\000\012" +
+    "\016\ufff3\034\ufff3\072\ufff3\073\ufff3\001\002\000\006\064" +
+    "\031\111\030\001\002\000\012\016\ufff5\034\035\072\ufff5" +
+    "\073\ufff5\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -96,31 +75,19 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\072\000\016\003\006\004\004\005\005\006\011\007" +
-    "\007\010\012\001\001\000\010\012\065\013\067\014\066" +
-    "\001\001\000\002\001\001\000\004\011\062\001\001\000" +
-    "\002\001\001\000\004\006\060\001\001\000\012\015\016" +
-    "\016\017\017\020\020\022\001\001\000\002\001\001\000" +
-    "\010\005\013\006\011\007\007\001\001\000\004\011\014" +
-    "\001\001\000\002\001\001\000\004\021\053\001\001\000" +
-    "\010\016\050\017\020\020\022\001\001\000\002\001\001" +
-    "\000\002\001\001\000\004\021\023\001\001\000\002\001" +
-    "\001\000\002\001\001\000\004\022\027\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\000\036\000\016\003\006\004\003\005\005\006\011\007" +
+    "\007\010\012\001\001\000\002\001\001\000\010\012\031" +
+    "\013\032\014\033\001\001\000\004\011\026\001\001\000" +
+    "\002\001\001\000\004\006\024\001\001\000\004\015\022" +
+    "\001\001\000\002\001\001\000\010\005\013\006\011\007" +
+    "\007\001\001\000\004\011\015\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\004\023\020\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\004\022\036\001\001\000\002\001" +
-    "\001\000\002\001\001\000\004\022\041\001\001\000\002" +
-    "\001\001\000\002\001\001\000\004\017\044\001\001\000" +
-    "\002\001\001\000\002\001\001\000\012\015\047\016\017" +
-    "\017\020\020\022\001\001\000\010\016\050\017\020\020" +
-    "\022\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\004\022\055\001\001\000" +
-    "\002\001\001\000\004\017\057\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\004\014\071\001\001\000" +
-    "\002\001\001\000\006\013\073\014\066\001\001\000\002" +
-    "\001\001" });
+    "\001\001\000\002\001\001\000\002\001\001\000\004\014" +
+    "\035\001\001\000\002\001\001\000\006\013\037\014\033" +
+    "\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -234,8 +201,7 @@ class CUP$Parser$actions {
 		Location scpxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location scpxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Object scp = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG3
- RESULT = scp; 
+
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Top",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -247,8 +213,7 @@ class CUP$Parser$actions {
 		Location soxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location soxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Object so = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG4
- RESULT = so; 
+
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("ScalaProgram",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -263,14 +228,28 @@ class CUP$Parser$actions {
 		Location soxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location soxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Object so = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG5
- RESULT =  lazabs.ast.ASTree.makeScalaObject(ps,so); 
+
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("ScalaProgram",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 4: // Import ::= 
+          case 4: // ScalaObject ::= OBJECT ID LCURLYBRACKET Declarations RCURLYBRACKET 
+            {
+              Object RESULT =null;
+		Location idxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).xleft;
+		Location idxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).xright;
+		String id = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
+		Location dsxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xleft;
+		Location dsxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xright;
+		Object ds = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("ScalaObject",7, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 5: // Import ::= 
             {
               Object RESULT =null;
 
@@ -279,7 +258,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 5: // Import ::= ImportDeclarations 
+          case 6: // Import ::= ImportDeclarations 
             {
               Object RESULT =null;
 
@@ -288,7 +267,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 6: // ImportDeclaration ::= IMPORT ImportExprs 
+          case 7: // ImportDeclaration ::= IMPORT ImportExprs 
             {
               Object RESULT =null;
 
@@ -297,7 +276,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 7: // ImportDeclarations ::= ImportDeclaration 
+          case 8: // ImportDeclarations ::= ImportDeclaration 
             {
               Object RESULT =null;
 
@@ -306,7 +285,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 8: // ImportDeclarations ::= ImportDeclarations ImportDeclaration 
+          case 9: // ImportDeclarations ::= ImportDeclarations ImportDeclaration 
             {
               Object RESULT =null;
 
@@ -315,20 +294,19 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 9: // Predicates ::= LANNOT PredStats RANNOT 
+          case 10: // Predicates ::= LANNOT PredStats RANNOT 
             {
               Object RESULT =null;
 		Location psxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xleft;
 		Location psxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xright;
 		Object ps = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		//@@CUPDBG6
- RESULT = ps; 
+
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Predicates",6, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 10: // ImportExprs ::= ImportExpr 
+          case 11: // ImportExprs ::= ImportExpr 
             {
               Object RESULT =null;
 
@@ -337,7 +315,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 11: // ImportExprs ::= ImportExprs COMMA ImportExpr 
+          case 12: // ImportExprs ::= ImportExprs COMMA ImportExpr 
             {
               Object RESULT =null;
 
@@ -346,7 +324,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 12: // ImportExpr ::= PathElem 
+          case 13: // ImportExpr ::= PathElem 
             {
               Object RESULT =null;
 		Location pexleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
@@ -358,7 +336,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 13: // ImportExpr ::= ImportExpr DOT PathElem 
+          case 14: // ImportExpr ::= ImportExpr DOT PathElem 
             {
               Object RESULT =null;
 		Location pexleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
@@ -370,19 +348,19 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 14: // PathElem ::= ID 
+          case 15: // PathElem ::= ID 
             {
               Object RESULT =null;
 		Location idxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location idxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
-		string id = (string)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		String id = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("PathElem",10, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 15: // PathElem ::= UNDERLINE 
+          case 16: // PathElem ::= UNDERLINE 
             {
               Object RESULT =null;
 
@@ -391,92 +369,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 16: // PredStats ::= PredStat 
-            {
-              Object RESULT =null;
-		Location pxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
-		Location pxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
-		Object p = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG7
- List list = new LinkedList<Parameter>();
-				      if(p instanceof Predicate) {				         
-				        List<Predicate> predicates = lazabs.ast.ASTree.expandPreds((Predicate)p);
-				        for(Predicate pred: predicates)
-				          list.add(pred);
-				        } else 
-				      list.add(p);
-				      RESULT = list; 
-				   
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("PredStats",11, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
-            }
-          return CUP$Parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 17: // PredStats ::= PredStats PredStat 
-            {
-              Object RESULT =null;
-		Location psxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xleft;
-		Location psxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xright;
-		Object ps = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		Location pxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
-		Location pxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
-		Object p = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG8
- if(p instanceof Predicate) {
-                        List<Predicate> predicates = lazabs.ast.ASTree.expandPreds((Predicate)p);
-				        for(Predicate pred: predicates)
-				          ps.add(pred);
-				        } else ps.add(p);
-				      RESULT = ps; 
-				   
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("PredStats",11, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
-            }
-          return CUP$Parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 18: // PredStat ::= Expr 
-            {
-              Object RESULT =null;
-		Location exleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
-		Location exright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
-		Object e = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG9
- RESULT = lazabs.ast.ASTree.makePredicate(e, new LinkedList<Predicate>()); 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("PredStat",12, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
-            }
-          return CUP$Parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 19: // PredStat ::= VarDeclaration 
-            {
-              Object RESULT =null;
-		Location vdxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
-		Location vdxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
-		Object vd = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG10
- RESULT = vd; 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("PredStat",12, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
-            }
-          return CUP$Parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 20: // PredStat ::= Expr ATSIGN LCURLYBRACKET PredStats RCURLYBRACKET 
-            {
-              Object RESULT =null;
-		Location exleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).xleft;
-		Location exright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).xright;
-		Object e = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-4)).value;
-		Location psxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xleft;
-		Location psxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xright;
-		Object ps = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		//@@CUPDBG11
- RESULT = lazabs.ast.ASTree.makePredicate(e, ps); 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("PredStat",12, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
-            }
-          return CUP$Parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 21: // VarDeclaration ::= VAR Variable COLON Type EQ Expr 
+          case 17: // VarDeclaration ::= VAR Variable COLON Type EQ Expr 
             {
               Object RESULT =null;
 		Location vxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).xleft;
@@ -488,14 +381,13 @@ class CUP$Parser$actions {
 		Location exleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location exright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Object e = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG12
- RESULT = new VarDeclaration(v.name(), t, e); 
+
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("VarDeclaration",14, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 22: // VarDeclaration ::= VAL Variable COLON Type EQ Expr 
+          case 18: // VarDeclaration ::= VAL Variable COLON Type EQ Expr 
             {
               Object RESULT =null;
 		Location vxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).xleft;
@@ -507,88 +399,32 @@ class CUP$Parser$actions {
 		Location exleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location exright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Object e = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG13
- RESULT = new VarDeclaration(v.name(), t, e); 
+
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("VarDeclaration",14, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 23: // Type ::= UNIT 
-            {
-              Object RESULT =null;
-		//@@CUPDBG14
- RESULT = new UnitType(); 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("Type",16, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
-            }
-          return CUP$Parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 24: // Type ::= ARRAY LSQUAREBRACKET Type RSQUAREBRACKET 
-            {
-              Object RESULT =null;
-		Location txleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xleft;
-		Location txright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xright;
-		Object t = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		//@@CUPDBG15
- RESULT = new ArrayType(t); 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("Type",16, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
-            }
-          return CUP$Parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 25: // Type ::= SET LSQUAREBRACKET Type RSQUAREBRACKET 
-            {
-              Object RESULT =null;
-		Location txleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xleft;
-		Location txright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xright;
-		Object t = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		//@@CUPDBG16
- RESULT = new SetType(t); 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("Type",16, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
-            }
-          return CUP$Parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 26: // Type ::= INT 
-            {
-              Object RESULT =null;
-		//@@CUPDBG17
- RESULT = new IntegerType(); 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("Type",16, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
-            }
-          return CUP$Parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 27: // Type ::= STRING 
-            {
-              Object RESULT =null;
-		//@@CUPDBG18
- RESULT = new StringType(); 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("Type",16, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
-            }
-          return CUP$Parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 28: // Type ::= BOOLEAN 
-            {
-              Object RESULT =null;
-		//@@CUPDBG19
- RESULT = new BooleanType(); 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("Type",16, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
-            }
-          return CUP$Parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 29: // Type ::= ID 
+          case 19: // Variable ::= ID 
             {
               Object RESULT =null;
 		Location idxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location idxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
-		string id = (string)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG20
- RESULT = new ClassType("sc_" + id); 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("Type",16, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+		String id = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("Variable",15, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 20: // Variable ::= DOLLAR ID 
+            {
+              Object RESULT =null;
+		Location idxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
+		Location idxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
+		String id = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("Variable",15, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 

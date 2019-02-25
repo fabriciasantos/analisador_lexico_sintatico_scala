@@ -34,18 +34,13 @@ scan with {: return lexer.next_token(); :};
 /* Terminals (tokens returned by the scanner). */
 terminal            SEMI, PLUS, MINUS, UMINUS, TIMES, LPAREN, RPAREN;
 terminal Integer   	NUMBER;        // our scanner provides numbers as integers
-terminal BOOLEAN, COLEQ,COMMA,  COLON,ARRAY,FALSE,WHILE,REACT,UNION,UNTIL,ACTOR;
+terminal BOOLEAN, COLEQ, COMMA, COLON,ARRAY,FALSE,WHILE,REACT,UNION,UNTIL,ACTOR;
 terminal CLASS,MINUSMINUS,LEQ,NEQ,AND,DOT,DIV,NOT,MOD,GEQ,NEW,ALL,DEF,ACT,INT;
 terminal SET,VAL,VAR,ENSURING,SUBSETOF,DOUBLEARROW,EQEQ,NULL,ELSE,LOOP,TRUE,UNIT;
 terminal CASE,INTERSECT,UNDERLINE,RANNOT,ATSIGN,DOLLAR,LANNOT,EQEQEQ,IMPORT,OBJECT;
-terminal STRING,RSQUAREBRACKET,LSQUAREBRACKET,OR,GT,EQ,LT,EX,IF,DO,RCURLYBRACKET;
-terminal LCURLYBRACKET,ID;
-terminal IF, AND, OR, NOT, MINUSMINUS, UNDERLINE, DIV, LANNOT, RANNOT, MOD, DOLLAR, ATSIGN, LEQ, DOUBLEARROW, 
-LT, GEQ, GT, EQ, NEQ, EQEQ, EQEQEQ, COLEQ, DOT, COMMA, COLON, LCURLYBRACKET, RCURLYBRACKET, LSQUAREBRACKET,
- RSQUAREBRACKET, ELSE, WHILE, DO, TRUE, FALSE, NULL, INT, BOOLEAN, STRING, NEW, VAR, VAL, DEF, CASE, IMPORT, 
- CLASS, OBJECT, EXTENDS, UNTIL, LOOP, IDENTIFIER, ARRAY, UNIT, SET;
+terminal STRING,RSQUAREBRACKET,LSQUAREBRACKET,OR,GT,EQ,LT,EX,IF,DO,RCURLYBRACKET, LCURLYBRACKET, EXTENDS;
+terminal String ID;
  
-terminal string ID;
 
 /* Non terminals */
 /*non terminal            expr_list;
@@ -68,8 +63,7 @@ non terminal VarDeclaration;
 non terminal Variable;
 non terminal Type;
 non terminal Declarations;
-non terminal VarDeclaration;
-non terminal Variable;
+
 /* Precedences */
 precedence left PLUS, MINUS;
 precedence left TIMES;
@@ -104,17 +98,18 @@ expr      ::= expr:e1 PLUS  expr:e2         {: RESULT = e1+e2;        :}
              ;*/
        
 Top               ::= ScalaProgram:scp
-                   {: RESULT = scp; :}
+                   //{: RESULT = scp; :}
                    ;
 ScalaProgram      ::= Import ScalaObject:so
-                   {: RESULT = so; :}
+                   //{: RESULT = so; :}
                    |  Predicates:ps Import ScalaObject:so
-                   {: RESULT =ps;so;   :} //ver o que tem para retornar
+                   //{: RESULT =ps; so;   :} //ver o que tem para retornar
                    ;
 
 ScalaObject       ::= OBJECT ID:id LCURLYBRACKET Declarations:ds RCURLYBRACKET
-                   {: RESULT =id;ds;  :} //ver o que tem para retornar
+                   //{: RESULT = id; ds; :} //ver o que tem para retornar
                    ;
+                  
                    
 Import            ::= 
                    |  ImportDeclarations
@@ -128,7 +123,7 @@ ImportDeclarations::= ImportDeclaration
                    ;  
                    
 Predicates        ::= LANNOT PredStats:ps RANNOT
-                   {: RESULT = ps; :}
+                   //{: RESULT = ps; :}
                    ;
 ImportExprs       ::= ImportExpr
                    |  ImportExprs COMMA ImportExpr
@@ -142,30 +137,31 @@ PathElem          ::= ID:id
                    |  UNDERLINE
                    ; //isso aqui quer dizer import java.io._
 
-Type              ::= UNIT
-                   {: RESULT = new UnitType(); :}
-                   |  ARRAY LSQUAREBRACKET Type:t RSQUAREBRACKET
-                   {: RESULT = new ArrayType(t); :}
-                   |  SET LSQUAREBRACKET Type:t RSQUAREBRACKET
-                   {: RESULT = new SetType(t); :}                   
-                   |  INT
-                   {: RESULT = new IntegerType(); :}
-                   |  STRING
-                   {: RESULT = new StringType(); :}
-                   |  BOOLEAN
-                   {: RESULT = new BooleanType(); :}
+/*Type              ::= UNIT:s
+                   //{: RESULT = s :}
+                   |  ARRAY:a LSQUAREBRACKET Type:t RSQUAREBRACKET
+                   //{: RESULT = a :}
+                   |  SET:s LSQUAREBRACKET Type:t RSQUAREBRACKET
+                   //{: RESULT = s :}                   
+                   |  INT:i
+                  // {: RESULT = i :}
+                   |  STRING:s
+                   //{: RESULT = s :}
+                   |  BOOLEAN:b
+                   //{: RESULT = b :}
                    |  ID:id
-                   {: RESULT = new ClassType("sc_" + id); :}                   
-                   ;
+                   //{: RESULT = id :}                   
+                   ; 
+*/
 
 VarDeclaration    ::= VAR Variable:v COLON Type:t EQ Expr:e
-                   {: RESULT = new VarDeclaration(v.name(), t, e); :}
+                   //{: RESULT = new VarDeclaration(v.name(), t, e); :}
                    |  VAL Variable:v COLON Type:t EQ Expr:e
-                   {: RESULT = new VarDeclaration(v.name(), t, e); :}
+                   //{: RESULT = new VarDeclaration(v.name(), t, e); :}
                    ;
                    
 Variable          ::= ID:id
-                   {: RESULT = id; :}
+                   //{: RESULT = id; :}
                    |  DOLLAR ID:id
-                   {: RESULT = id; :}
+                   //{: RESULT = id; :}
                    ;      
