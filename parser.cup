@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.File;
 import java.io.FileInputStream;
 import cup.example.*;
+import sintaxeabstract.*;
 
 parser code {:
   protected Lexer lexer;
@@ -115,16 +116,16 @@ expr      ::= expr:e1 PLUS  expr:e2         {: RESULT = e1+e2;        :}
              ;*/
        
 Top               ::= ScalaProgram:scp
-                   //{: RESULT = scp; :}
+                   {: RESULT = scp; :}
                    ;
 ScalaProgram      ::= Import ScalaObject:so
-                   //{: RESULT = so; :}
+                   {: RESULT = so; :}
                    |  Predicates:ps Import ScalaObject:so
-                   //{: RESULT =ps; so;   :} //ver o que tem para retornar
+                   {: RESULT = new makeScalaObject(ps, so); :}
                    ;
 
 ScalaObject       ::= OBJECT ID:id LCURLYBRACKET Declarations:ds RCURLYBRACKET
-                   //{: RESULT = id; ds; :} //ver o que tem para retornar
+                   {: IdExp ie = new IdExp(id2); RESULT = new makeScalaObject(ie, ds); :} //ver o que tem para retornar
                    ;
                   
                    
@@ -140,7 +141,7 @@ ImportDeclarations::= ImportDeclaration
                    ;  
                    
 Predicates        ::= LANNOT PredStats:ps RANNOT
-                   //{: RESULT = ps; :}
+                   {: RESULT = ps; :}
                    ;
 ImportExprs       ::= ImportExpr
                    |  ImportExprs COMMA ImportExpr
@@ -241,9 +242,9 @@ ParamClause       ::= LPAREN ParamsComma:ps RPAREN
                    ;                   
                    
 PredStats         ::= PredStat:p
-				   //{: RESULT =  :}
+				   //{: RESULT =  (new list<PredStat>()) a.add(p): a}
                    |  PredStats:ps PredStat:p
-                   //{: RESULT =  :}
+                   //{: RESULT =  ps.add(p); ps:}
                    ;
 
 PredStat          ::= Expr:e
@@ -369,12 +370,12 @@ BlockStats        ::= BlockStat:b
                    ;
 
 BlockStat         ::= Expr:e
-				   //{: RESULT =  :}
+				   {: RESULT = e; :}
                    |  Declaration:d
-                   //{: RESULT =  :}
+                   {: RESULT = d; :}
                    ;
                    
 Binding           ::= Variable:v
-                   //{: RESULT =  :}
+                   {: RESULT = v; :}
                    ;           
                  
