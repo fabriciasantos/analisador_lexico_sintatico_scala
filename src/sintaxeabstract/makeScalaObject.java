@@ -3,45 +3,38 @@ package sintaxeabstract;
 import visitor.AbstractVisitor;
 
 public class makeScalaObject extends ScalaProgram{
-	
+
+	private ScalaObject scalaObjecto;
 	private Predicates predicates;
-	private ScalaObject scalaObject;
-	private Declaration declaration;
-	private IdExp id;	
 	
-	public makeScalaObject(Predicates predicates, ScalaObject scalaObject) {
-		this.predicates = predicates;
-		this.scalaObject = scalaObject;
-	}
-	
-	public makeScalaObject(IdExp id, Declaration declaration) {
-		this.id = id;
-		this.declaration = declaration;
+	public makeScalaObject (ScalaObject so, Predicates ps){
+		this.predicates = ps;
+		this.scalaObjecto = so;
 	}
 	
 	public Predicates getPredicates() {
 		return predicates;
 	}
 
-
 	public void setPredicates(Predicates predicates) {
 		this.predicates = predicates;
 	}
 
-
-	public ScalaObject getScalaObject() {
-		return scalaObject;
+	public void setScalaObjecto(ScalaObject scalaObjecto) {
+		this.scalaObjecto = scalaObjecto;
 	}
 
-
-	public void setScalaObject(ScalaObject scalaObject) {
-		this.scalaObject = scalaObject;
+	public ScalaObject getScalaObjecto() {
+		return scalaObjecto;
 	}
 
+	public void ScalaObject(ScalaObject scalaObjecto) {
+		this.scalaObjecto = scalaObjecto;
+	}
 
 	@Override
 	public Object accept(AbstractVisitor av) {
-		// TODO Auto-generated method stub		
+		this.accept(av);
 		return null;
 	}
 

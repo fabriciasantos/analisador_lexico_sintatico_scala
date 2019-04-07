@@ -2,20 +2,13 @@ package sintaxeabstract;
 
 import visitor.AbstractVisitor;
 
-public class IdExp extends Expr{
+public class BooleanType extends Type{
 	
-	private String id;
+	private Boolean BoolType = new Boolean(null);
+
 	
-	public IdExp(String id) {
-		this.id = id;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
+	public boolean getBoolType() {
+		return BoolType;
 	}
 
 	@Override
@@ -24,5 +17,6 @@ public class IdExp extends Expr{
 		this.accept(av);
 		return null;
 	}
-
+	
+	
 }

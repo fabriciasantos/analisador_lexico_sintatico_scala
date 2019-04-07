@@ -47,40 +47,39 @@ terminal String ID;
 /* Non terminals */
 /*non terminal            expr_list;
 non terminal Integer    expr; */
-non terminal program;     // used to store evaluated subexpressions
 non terminal Top;
-non terminal ScalaProgram;
-non terminal Import;
-non terminal ImportDeclaration;
-non terminal ImportDeclarations;
-non terminal Predicates;
-non terminal ScalaObject;
-non terminal ImportExprs; 
-non terminal ImportExpr;
-non terminal PathElem;
-non terminal PredStats;
-non terminal PredStat;
-non terminal Expr;
-non terminal VarDeclaration;
-non terminal Variable;
-non terminal Type;
-non terminal Declarations;
-non terminal Declaration;
-non terminal ActorStats;
-non terminal ActorStat;
-non terminal FunDeclaration;
-non terminal ClassDeclaration;
-non terminal React;
-non terminal ParamClause;
-non terminal FunDeclarationWOPost;
-non terminal ParamsComma;
+non terminal ScalaProgram ScalaProgram;
+non terminal Import Import;
+non terminal ImportDeclaration ImportDeclaration;
+non terminal ImportDeclaration ImportDeclarations;
+non terminal Predicates Predicates;
+non terminal ScalaObject ScalaObject;
+non terminal ImportExpr ImportExprs; 
+non terminal ImportExpr ImportExpr;
+non terminal PathElem PathElem;
+non terminal PredStat PredStats;
+non terminal PredStat PredStat;
+non terminal Expr Expr;
+non terminal VarDeclaration VarDeclaration;
+non terminal Variable Variable;
+non terminal Type Type;
+non terminal Declaration Declarations;
+non terminal Declaration Declaration;
+non terminal ActorStat ActorStats;
+non terminal ActorStat ActorStat;
+non terminal FunDeclaration FunDeclaration;
+non terminal ClassDeclaration ClassDeclaration;
+non terminal React React;
+non terminal ParamClause ParamClause;
+non terminal FunDeclarationWOPost FunDeclarationWOPost;
+non terminal ParamsComma ParamsComma;
 non terminal ExprsComma;
-non terminal ArgumentExprs;
-non terminal BinaryExpression;
-non terminal BlockStats;
-non terminal Block;
-non terminal BlockStat;
-non terminal Binding;
+non terminal ArgumentExprs ArgumentExprs;
+non terminal BinaryExpression BinaryExpression;
+non terminal BlockStats BlockStats;
+non terminal Block Block;
+non terminal BlockStat BlockStat;
+non terminal Binding Binding;
 
 /* Precedences */
 precedence left PLUS, MINUS;
@@ -121,11 +120,11 @@ Top               ::= ScalaProgram:scp
 ScalaProgram      ::= Import ScalaObject:so
                    {: RESULT = so; :}
                    |  Predicates:ps Import ScalaObject:so
-                   {: RESULT = new makeScalaObject(ps, so); :}
+                   {: RESULT = new makeScalaObject(so, ps); :}
                    ;
 
 ScalaObject       ::= OBJECT ID:id LCURLYBRACKET Declarations:ds RCURLYBRACKET
-                   {: IdExp ie = new IdExp(id2); RESULT = new makeScalaObject(ie, ds); :} //ver o que tem para retornar
+                   {: IdExp ie = new IdExp(id); RESULT = new makeObjectScalaTwo(ie, ds); :}
                    ;
                   
                    
@@ -155,25 +154,22 @@ PathElem          ::= ID:id
                    |  UNDERLINE
                    ; //isso aqui quer dizer import java.io._
 
-Type              ::= UNIT:s
-                   //{: RESULT = s :}
-                   |  ARRAY:a LSQUAREBRACKET Type:t RSQUAREBRACKET
-                   //{: RESULT = a :}
-                   |  SET:s LSQUAREBRACKET Type:t RSQUAREBRACKET
-                   //{: RESULT = s :}                   
-                   |  INT:i
-                  // {: RESULT = i :}
-                   |  STRING:s
-                   //{: RESULT = s :}
-                   |  BOOLEAN:b
-                   //{: RESULT = b :}
+Type              ::= INT
+                   {: RESULT = new IntType().getIntType; :}
+                   |  STRING
+                   {: RESULT = new StringType().getStringType; :}
+                   |  BOOLEAN
+                   {: RESULT = new BooleanType().getBoolType; :}
                    |  ID:id
-                   //{: RESULT = id :}                   
+                   {: RESULT = new IdExp(id); :}                   
                    ; 
+                   
 Declarations      ::= Declaration:d
-                   //{: RESULT =  :}
+                   {: List<Declaration> list = List<Declaration>();
+                          list.add(d); 
+                      RESULT = list; :}
                    |  Declarations:ds Declaration:d
-                   //{: RESULT =  :}
+                   {: ds.add(d); RESULT = ds :}
                    ;
 
 Declaration       ::= VAL Variable:v COLON Type:t EQ ACTOR LCURLYBRACKET ActorStats:es RCURLYBRACKET
@@ -183,14 +179,16 @@ Declaration       ::= VAL Variable:v COLON Type:t EQ ACTOR LCURLYBRACKET ActorSt
                    |  Predicates:ps
                    //{: RESULT =  :}
                    |  VarDeclaration:vd
-                   //{: RESULT =  :}                   
+                   {: RESULT = vd:}                   
                    |  ClassDeclaration:cd
-                   //{: RESULT =  :}
+                   {: RESULT =  cd:}
                    ;
 ActorStats        ::= ActorStat:a
-				   //{: RESULT = list; :}
+				   {: List<ActorStat> list = List<ActorStat>(); 
+						list.add(a);  
+					  RESULT = list;:}
                    |  ActorStats:as ActorStat:a
-                   //{: RESULT = as; :} 
+                   {: as.add(a); RESULT = as; :} 
                    ;
 
 ActorStat         ::= Expr:e
@@ -281,13 +279,7 @@ Expr              ::= ALL:q ID:bv COLON Type:t DOT Expr:e
                    |  ID:id ArgumentExprs:e1 ArgumentExprs:e2
                    //{: RESULT =  :}
                    |  DOLLAR ID:id ArgumentExprs:e1 ArgumentExprs:e2
-                   //{: RESULT =  :}                   
-                   |  ARRAY ArgumentExprs:as
-                   //{: RESULT =  :}
-                   |  SET ArgumentExprs:as
-                   //{: RESULT =  :}                   
-                   |  NEW ARRAY LSQUAREBRACKET Type:t RSQUAREBRACKET LPAREN Expr:e RPAREN
-                   //{: RESULT =  :}
+                   //{: RESULT =  :}   
                    |  BinaryExpression:b
                    //{: RESULT =  :}
                    |  Variable:v
@@ -306,7 +298,8 @@ Expr              ::= ALL:q ID:bv COLON Type:t DOT Expr:e
                    //{: RESULT =  :}
                    |  FALSE:f
                    //{: RESULT =  :}                   
-                   ;                   
+                   ;  
+                                    
 ArgumentExprs     ::= LPAREN RPAREN
                    //{: RESULT =  :}
                    |  LPAREN ExprsComma:es RPAREN
